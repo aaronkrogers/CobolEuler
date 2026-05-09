@@ -9,6 +9,7 @@ src/
 ├── Euler1.cbl         # Problem 1: Sum of multiples of 3 or 5 below 1000
 ├── Euler2.cbl         # Problem 2: Sum of even-valued Fibonacci terms up to 4,000,000
 ├── Euler3.cbl         # Problem 3: Largest prime factor of 600,851,475,143
+├── Euler4.cbl         # Problem 4: Largest palindrome product
 ├── Euler48.cbl        # Problem 48: Self powers
 ├── library/
     └── is_prime.cbl   # Reusable library for prime number testing
@@ -46,6 +47,7 @@ cd src
 ./Euler1
 ./Euler2
 ./Euler3
+./Euler4
 ./Euler48
 ```
 
