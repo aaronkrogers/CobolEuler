@@ -4,7 +4,6 @@
        data division.
        working-storage section.
            01  ws_test_value       binary-double.
-           01  ws_max_divisor      binary-double.
            01  ws_iter             binary-double.
            01  ws_remainder        binary-double.
            
@@ -12,40 +11,55 @@
            01  ls_test_value       binary-double.
            01  ls_result           pic x.
 
-       procedure division using ls_test_value,
+       procedure division   using  ls_test_value,
                                    ls_result.
            
-       perform 100-init thru 100-test.
-       goback.
+           perform 0100-init.
+           perform 0200-run.
+           goback.
 
-       100-init.
+       0100-init.
+
            move ls_test_value      to  ws_test_value.
-           compute ws_max_divisor = ws_test_value ** 0.5 + 1.
-       
-       100-test.
-             if ws_test_value = 1 or ws_test_value = 2
-               if ws_test_value = 1 then
-                   move 'N'    to  ls_result
-                   goback
-               else 
-                   move 'Y'    to  ls_result
+
+       0200-run.
+
+           move ls_test_value      to  ws_test_value.
+
+           if  ws_test_value  <=  1
+               move  'N'           to  ls_result
+               goback
+           end-if
+
+           if  ws_test_value  =  2
+               move  'Y'           to  ls_result
+               goback
+           end-if
+
+           divide ws_test_value    by 2
+                                   giving ws_remainder
+                                   remainder ws_remainder
+
+           if  ws_remainder  =  0
+               move  'N'           to  ls_result
+               goback
+           end-if.
+
+           perform varying ws_iter from 3 by 2
+             until ws_iter * ws_iter  >=  ws_test_value
+
+               divide ws_test_value    by ws_iter
+                                       giving ws_remainder
+                                       remainder ws_remainder
+
+               if  ws_remainder  =  0
+                   move  'N'           to  ls_result
                    goback
                end-if
-           else
-               move 'Y'        to  ls_result
-               perform  varying ws_iter from 2 by 1
-                 until  ws_iter > ws_max_divisor
-       
-                   divide  ws_test_value by ws_iter
-                           giving    ws_remainder
-                           remainder ws_remainder
 
-                   if  ws_remainder = 0
-                       move 'N' to ls_result
-                       goback
-                   end-if
-                  
-               end-perform
-           end-if.
+           end-perform.
+
+           move  'Y'               to  ls_result.
+           goback.
 
        end program is_prime.
