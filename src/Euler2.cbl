@@ -4,10 +4,10 @@
        data division.
        working-storage section.
            01  ws_fibs.
-               05 ws_fib   pic 9(7) occurs 3 times.
-           01 ws_limit     pic 9(7) value 4000000.
-           01 ws_result    pic z(9) value zero.
-           01 ws_result_x  pic x(9).
+               05  ws_fib      binary-double unsigned occurs 3 times.
+           01  ws_limit        binary-double unsigned value 4000000.
+           01  ws_result       pic z(8)9.
+           01  ws_result_x     pic x(9).
 
        procedure division.
 

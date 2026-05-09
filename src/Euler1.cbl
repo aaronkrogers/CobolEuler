@@ -8,10 +8,10 @@
 
        data division.
        working-storage section.
-           01  ws_step         pic 9(6) comp-4.
-           01  ws_stop         pic 9(6) comp-4  value 1000.
-           01  ws_current      pic 9(6) comp-4.
-           01  ws_remainder    pic 9(6) comp-4.
+           01  ws_step         binary-long unsigned.
+           01  ws_stop         binary-long unsigned  value 1000.
+           01  ws_current      binary-long unsigned.
+           01  ws_remainder    binary-long unsigned.
            01  ws_result       pic 9(6).
 
        procedure division.

@@ -3,13 +3,17 @@
 
        data division.
        working-storage section.
-       01  ws_testor           pic 9(12) value 600851475143.
-       01  ws_remainder        pic 9(12).
-       01  ws_prime_can        pic 9(12) value 2.
-       01  ws_largest_prime    pic z(12).
+       01  ws_testor           binary-double unsigned
+                               value 600851475143.
+       01  ws_prime_can        binary-double unsigned value 2.
+       01  ws_remainder        binary-double unsigned.
+       01  ws_largest_prime    binary-double unsigned.
        01  ws_is_prime_res     pic x(1).
            88  ws_is_prime     value 'Y'.
-       01  ws_result_x         pic x(12).
+
+       01  ws_result           pic z(11)9.
+       01  ws_result_x         redefines ws_result
+                               pic x(12).
        
        procedure division.
 
@@ -29,7 +33,7 @@
 
                if  ws_prime_can  =  2
                    move  'N'           to  ws_is_prime_res
-                   call  'is-prime' using  ws_testor
+                   call  'is_prime' using  ws_testor
                                            ws_is_prime_res
 
                    if  ws_is_prime
@@ -42,7 +46,7 @@
                    add   1             to  ws_prime_can
                else
                    move  'N'           to  ws_is_prime_res
-                   call  'is-prime'     using  ws_prime_can
+                   call  'is_prime'     using  ws_prime_can
                                            ws_is_prime_res
                
                    if  ws_is_prime
@@ -54,7 +58,7 @@
 
            end-perform.
 
-           move  ws_largest_prime      to  ws_result_x.
+           move  ws_largest_prime      to  ws_result.
            move  function trim(ws_result_x)
                                        to  ws_result_x.
            display  'Solution: ' ws_result_x.
