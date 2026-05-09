@@ -69,4 +69,4 @@ A utility module for testing whether a number is prime. Called by solutions that
 call 'is_prime' using test-value result
 ```
 
-Where `test-value` is a PIC 9(12) number and `result` is a PIC X(1) field that will contain 'Y' or 'N'.
+Where `test-value` is a binary-double number and `result` is a PIC X(1) field that will contain 'Y' or 'N'.
