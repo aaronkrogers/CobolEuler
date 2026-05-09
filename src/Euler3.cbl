@@ -1,36 +1,60 @@
-000100 identification division.
-000200 program-id. euler3.
-000300 environment division.
-000400 configuration section.
-000500     repository.
-000600     function isPrime.
-000700 data division.
-000800 working-storage section.
-000900     01 ws-testor        pic 9(12) value 600851475143.
-001000     01 ws-remainder     pic 9(12).
-001100     01 ws-prime-can     pic 9(12) value 2.
-001200 procedure division.
-001300 perform 100-init thru 100-exit.
-001400 goback.
-001500 100-init.
-001600     continue.
-001700 100-run.
-001800     perform 
-001900     until ws-prime-can > ws-testor ** 0.5
-002000         divide ws-testor by ws-prime-can giving ws-remainder
-002100           remainder ws-remainder
-002200         if function isPrime(ws-testor) = "Y"
-002300             display "Result: " ws-testor
-002400             goback
-002500         end-if
-002600         if ws-remainder = 0
-002700           and function isPrime(ws-prime-can) = "Y"
-002800             perform 200-prime-found
-002900         end-if
-003000         add 1 to ws-prime-can
-003100     end-perform.
-003200 100-exit. exit.
-003300 200-prime-found.
-003400     divide ws-prime-can into ws-testor.
-003500     move 2 to ws-prime-can.
-003600 end program euler3.
+       identification division.
+       program-id. euler3.
+
+       data division.
+       working-storage section.
+       01  ws_testor           pic 9(12) value 600851475143.
+       01  ws_remainder        pic 9(12).
+       01  ws_prime_can        pic 9(12) value 2.
+       01  ws_largest_prime    pic z(12).
+       01  ws_is_prime_res     pic x(1).
+           88  ws_is_prime     value 'Y'.
+       01  ws_result_x         pic x(12).
+       
+       procedure division.
+
+           perform 0100-init.
+           perform 0200-run.
+           goback.
+
+       0100-init.
+           display 'Problem: What is the largest prime factor of '
+                   'the number 600851475143?'.
+
+       0200-run.
+           perform
+           until ws_prime_can > ws_testor ** 0.5
+               divide ws_testor by ws_prime_can giving ws_remainder
+                 remainder ws_remainder
+
+               if  ws_prime_can  =  2
+                   move  'N'           to  ws_is_prime_res
+                   call  'is-prime' using  ws_testor
+                                           ws_is_prime_res
+
+                   if  ws_is_prime
+                       move  ws_testor to  ws_largest_prime
+                       exit perform
+                   end-if
+               end-if
+
+               if  ws_remainder  not =  0
+                   add   1             to  ws_prime_can
+               else
+                   move  'N'           to  ws_is_prime_res
+                   call  'is-prime'     using  ws_prime_can
+                                           ws_is_prime_res
+               
+                   if  ws_is_prime
+                       move  ws_prime_can  to  ws_largest_prime
+                       divide  ws_prime_can    into  ws_testor
+                       move    2           to  ws_prime_can
+                   end-if
+               end-if
+
+           end-perform.
+
+           move  ws_largest_prime      to  ws_result_x.
+           move  function trim(ws_result_x)
+                                       to  ws_result_x.
+           display  'Solution: ' ws_result_x.

@@ -1,0 +1,14 @@
+# Compiled COBOL binaries
+Euler*
+!Euler*.cbl
+
+# Object and module files
+*.o
+*.mod
+
+# Shared libraries and DLLs
+*.so
+*.dll
+
+# Executable files
+*.exe
